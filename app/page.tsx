@@ -20,6 +20,10 @@ const courseTracks = [
   { tag: "ANALYTICS", title: "SAP Analytics Cloud", level: "Intermediate", lessons: "22 lessons", accent: "blue" },
   { tag: "GOVERNANCE", title: "Security & Data Access", level: "Advanced", lessons: "14 lessons", accent: "violet" },
   { tag: "PROJECT", title: "End-to-End Data Product", level: "Capstone", lessons: "8 workshops", accent: "yellow" },
+  { tag: "DATASPHERE", title: "SAP Datasphere Administration", level: "Intermediate", lessons: "16 lessons", accent: "lime" },
+  { tag: "ANALYTICS", title: "Planning with Analytics Cloud", level: "Advanced", lessons: "18 lessons", accent: "blue" },
+  { tag: "MODELING", title: "Advanced SQL Views", level: "Advanced", lessons: "15 lessons", accent: "mint" },
+  { tag: "CAREER", title: "SAP Data Interview Lab", level: "Career", lessons: "10 workshops", accent: "orange" },
 ];
 
 export default function Home() {
@@ -27,8 +31,15 @@ export default function Home() {
   const [tab, setTab] = useState("Pathway");
   const [showCurriculum, setShowCurriculum] = useState(false);
   const [courseSearch, setCourseSearch] = useState("");
+  const [courseCategory, setCourseCategory] = useState("All");
+  const [showAllCourses, setShowAllCourses] = useState(false);
+  const [enquirySent, setEnquirySent] = useState(false);
   const current = modules[activeModule];
   const progress = useMemo(() => Math.round(((activeModule + 0.35) / modules.length) * 100), [activeModule]);
+  const visibleCourses = courseTracks.filter((course) => {
+    const text = `${course.title} ${course.tag} ${course.level}`.toLowerCase();
+    return text.includes(courseSearch.toLowerCase()) && (courseCategory === "All" || text.includes(courseCategory.toLowerCase()));
+  });
 
   return (
     <main>
@@ -36,7 +47,7 @@ export default function Home() {
       <header className="topbar">
         <a className="brand" href="#top" aria-label="DataForge home"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></a>
         <nav aria-label="Primary navigation">
-          {["Pathway", "Practice Lab", "Resources"].map((item) => <button key={item} onClick={() => setTab(item)} className={tab === item ? "selected" : ""}>{item}</button>)}
+          {["Home", "Courses", "Pathway", "Benefits", "Faculty"].map((item) => <button key={item} onClick={() => {setTab(item); document.getElementById(({Home:"top",Courses:"catalog",Pathway:"course",Benefits:"benefits",Faculty:"faculty"} as Record<string,string>)[item])?.scrollIntoView({behavior:"smooth"})}} className={tab === item ? "selected" : ""}>{item}</button>)}
         </nav>
         <div className="header-actions"><button className="search" aria-label="Search">⌕</button><div className="streak"><span>◆</span> 7 day streak</div><button className="avatar" aria-label="Open profile">AK</button></div>
       </header>
@@ -68,12 +79,14 @@ export default function Home() {
 
       <section className="catalog" id="catalog">
         <div className="catalog-head"><div><span className="eyebrow-text">SAP LEARNING PROGRAMS</span><h2>Explore Our Courses</h2></div><p>Focused learning tracks built around real SAP data workflows—not disconnected feature tours.</p></div>
+        <div className="category-pills">{["All","Datasphere","Modeling","Analytics","Career"].map(category => <button key={category} className={courseCategory === category ? "active" : ""} onClick={() => {setCourseCategory(category); setShowAllCourses(false)}}>{category === "All" ? "All programs" : category}</button>)}</div>
         <div className="course-browser"><aside className="course-categories"><b>Trending Courses</b><button className="active">SAP Datasphere</button><button>SAP Analytics Cloud</button><button>Data Modeling</button><button>Data Integration</button><button>SAP Business Data Cloud</button><button>Career Preparation</button></aside><div className="course-grid">
-          {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).map((course, index) => <article className={`course-card ${course.accent}`} key={course.title}>
+          {visibleCourses.slice(0, showAllCourses ? visibleCourses.length : 6).map((course, index) => <article className={`course-card ${course.accent}`} key={course.title}>
             <div className="course-card-top"><span>{course.tag}</span><b>0{index + 1}</b></div><div className="course-glyph"><i></i><i></i><b>{course.title.split(" ")[0]}</b></div><h3>{course.title}</h3><div className="course-data"><span>{course.level}</span><span>{course.lessons}</span></div><button onClick={() => setShowCurriculum(true)}>View program <span>↗</span></button>
           </article>)}
         </div></div>
-        {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).length === 0 && <p className="no-results">No exact match yet. Try “modeling”, “analytics”, or “beginner”.</p>}
+        {visibleCourses.length === 0 && <p className="no-results">No exact match yet. Try “modeling”, “analytics”, or “beginner”.</p>}
+        {visibleCourses.length > 6 && <button className="show-more" onClick={() => setShowAllCourses(value => !value)}>{showAllCourses ? "Show fewer" : "Show more programs"} <span>{showAllCourses ? "↑" : "↓"}</span></button>}
       </section>
 
       <section className="career-board">
@@ -162,7 +175,7 @@ export default function Home() {
         ].map(([icon,label]) => <article key={label}><b>{icon}</b><span>{label}</span></article>)}</div></div>
       </section>
 
-      <section className="program-support">
+      <section className="program-support" id="benefits">
         <div className="support-ribbons">{[
           ["▣","Live Class with Industry Use Cases",["Interactive learning","Real SAP examples","Expert guidance","Doubt resolution"]],
           ["▤","Daily Assignment & Weekly Assessments",["Hands-on practice","Concept reinforcement","Weekly evaluation","Timely feedback"]],
@@ -183,7 +196,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="faculty">
+      <section className="faculty" id="faculty">
         <div className="faculty-heading"><h2>Meet Our Faculty</h2><p>Learn with dedicated instructors and industry-focused mentors</p></div>
         <div className="faculty-leads">{[
           ["AR","Ananya Rao","Lead · SAP Datasphere"],["VM","Vikram Mehta","Lead · Data Architecture"],["NS","Neha Singh","Lead · Analytics & Careers"]
@@ -204,7 +217,7 @@ export default function Home() {
 
       <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
 
-      <aside className="enquiry-card"><div className="enquiry-title">Reach Out to Us <span>⌄</span></div><form onSubmit={(event) => event.preventDefault()}><input placeholder="Enter your full name" aria-label="Full name"/><input placeholder="Enter phone number" aria-label="Phone number"/><input placeholder="Enter your course" aria-label="Course of interest"/><button type="submit">Submit</button></form></aside>
+      <aside className="enquiry-card"><div className="enquiry-title">Reach Out to Us <span>⌄</span></div>{enquirySent ? <div className="enquiry-success"><b>Thank you!</b><p>Your request is ready. Connect a destination email or CRM to receive submissions.</p><button onClick={() => setEnquirySent(false)}>Send another</button></div> : <form onSubmit={(event) => {event.preventDefault(); setEnquirySent(true)}}><input required placeholder="Enter your full name" aria-label="Full name"/><input required type="tel" placeholder="Enter phone number" aria-label="Phone number"/><input required placeholder="Enter your course" aria-label="Course of interest"/><button type="submit">Submit</button></form>}</aside>
       <a className="call-float" href="tel:+918882178896" aria-label="Call DataForge">☎</a>
       <div className="contact-bar"><span>◉ +91-8882178896</span><span>✉ Learn SAP with DataForge</span><span>▣ Live guided classes</span></div>
 
