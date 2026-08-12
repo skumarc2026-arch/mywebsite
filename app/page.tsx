@@ -16,6 +16,7 @@ const skills: Array<[string, number]> = [
 export default function Home() {
   const [activeModule, setActiveModule] = useState(1);
   const [tab, setTab] = useState("Pathway");
+  const [showCurriculum, setShowCurriculum] = useState(false);
   const current = modules[activeModule];
   const progress = useMemo(() => Math.round(((activeModule + 0.35) / modules.length) * 100), [activeModule]);
 
@@ -35,7 +36,7 @@ export default function Home() {
           <div>
             <h1>Turn raw data into<br/><em>real decisions.</em></h1>
             <p className="lede">A hands-on learning pathway for the next generation of SAP data engineers. Build the foundation. Master the tools. Solve what matters.</p>
-            <div className="hero-actions"><button className="primary" onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}>Continue learning <span>→</span></button><button className="secondary" onClick={() => setTab("Pathway")}>View curriculum <span>↘</span></button></div>
+            <div className="hero-actions"><button className="primary" onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}>Continue learning <span>→</span></button><button className="secondary" onClick={() => setShowCurriculum(true)}>View curriculum <span>↘</span></button></div>
           </div>
           <div className="signal-card" aria-label="Current learning progress">
             <div className="signal-head"><span>YOUR MOMENTUM</span><b>THIS WEEK</b></div>
@@ -80,6 +81,31 @@ export default function Home() {
       </section>
 
       <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
+
+      {showCurriculum && <div className="curriculum-backdrop" role="presentation" onMouseDown={() => setShowCurriculum(false)}>
+        <section className="curriculum-panel" role="dialog" aria-modal="true" aria-labelledby="curriculum-title" onMouseDown={(event) => event.stopPropagation()}>
+          <div className="curriculum-head">
+            <div><span className="eyebrow-text">SAP DATASPHERE · LEARNING PATH</span><h2 id="curriculum-title">From data source<br/>to business insight.</h2></div>
+            <button className="close" onClick={() => setShowCurriculum(false)} aria-label="Close curriculum">×</button>
+          </div>
+          <div className="curriculum-summary"><p>A practical, project-led curriculum for engineers learning to integrate, model, govern, and deliver trusted data products in SAP Datasphere.</p><div><span><b>6</b> MODULES</span><span><b>12h</b> GUIDED LEARNING</span><span><b>6</b> HANDS-ON LABS</span></div></div>
+          <div className="curriculum-list">
+            {[
+              ["01", "Datasphere foundations", "Understand the architecture, spaces, roles, connections, and the end-to-end data lifecycle.", "Explore a Datasphere tenant and create your first workspace", "1h 15m"],
+              ["02", "Connect & acquire data", "Set up connections, remote tables, replication flows, and data flows across SAP and non-SAP sources.", "Connect SAP S/4HANA data and build a replication flow", "2h"],
+              ["03", "Model the business", "Design local tables, views, associations, analytical datasets, measures, dimensions, and semantic usage.", "Build a sales performance analytical model", "2h 30m"],
+              ["04", "Transform & integrate", "Apply graphical and SQL transformations, joins, unions, filters, calculated columns, and delta handling.", "Create a governed customer 360 data flow", "2h 15m"],
+              ["05", "Govern & secure", "Use the catalog, metadata, data access controls, lineage, impact analysis, and transport workflows.", "Implement row-level access and trace data lineage", "1h 45m"],
+              ["06", "Consume & deliver", "Expose trusted models to SAP Analytics Cloud and other consumers, then monitor performance and usage.", "Publish an executive-ready model to SAP Analytics Cloud", "2h 15m"],
+            ].map(([number,title,description,lab,time]) => <article className="curriculum-item" key={number}>
+              <span className="curriculum-number">{number}</span>
+              <div><h3>{title}</h3><p>{description}</p><div className="lab"><b>LAB</b><span>{lab}</span></div></div>
+              <span className="curriculum-time">{time}</span>
+            </article>)}
+          </div>
+          <div className="curriculum-footer"><p><b>CAPSTONE OUTCOME</b> Build and publish a secure, reusable SAP Datasphere data product from source to dashboard.</p><button className="start" onClick={() => {setShowCurriculum(false); document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}}>Start pathway <span>→</span></button></div>
+        </section>
+      </div>}
     </main>
   );
 }
