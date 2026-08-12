@@ -160,7 +160,10 @@ export default function Home() {
           ["LEARNING", "MATERIALS GUIDE"], ["BUILD A", "JOB-READY RESUME"], ["INTERVIEW", "PREPARATION"], ["REAL PROJECT", "GUIDANCE"]
         ].map(([line1,line2],index) => <button key={line2} onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})} aria-label={`Open ${line1} ${line2} benefit`}><span className="video-brand">DF ACADEMY</span><strong>{line1}<br/><em>{line2}</em></strong><i>▶</i><small>HD</small><b>0{index + 1}</b></button>)}</div>
 
-        <div className="ecosystem"><h2>Prepare for the <em>SAP Data</em> ecosystem</h2><div><span>SAP</span><span>Datasphere</span><span>Analytics Cloud</span><span>S/4HANA</span><span>Business Data Cloud</span><span>SQL</span><span>Power BI</span></div></div>
+        <div className="ecosystem"><h2>Prepare for the <em>SAP Data</em> ecosystem</h2>
+          <div className="logo-marquee right"><div className="logo-track">{[...Array(2)].flatMap((_,set) => ["SAP","Datasphere","Analytics Cloud","S/4HANA","Business Data Cloud","SQL","Power BI"].map((name,index) => <span key={`top-${set}-${index}`}>{name}</span>))}</div></div>
+          <div className="logo-marquee left"><div className="logo-track">{[...Array(2)].flatMap((_,set) => ["Accenture","Deloitte","Capgemini","Infosys","Wipro","Genpact","Tech Mahindra"].map((name,index) => <span key={`bottom-${set}-${index}`}>{name}</span>))}</div></div>
+        </div>
       </section>
 
       <section className="faculty">
