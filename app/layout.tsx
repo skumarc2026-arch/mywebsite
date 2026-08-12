@@ -3,6 +3,7 @@ import "./globals.css";
 import "./intensive.css";
 import "./interview.css";
 import "./theme.css";
+import "./refinements.css";
 
 export const metadata: Metadata = {
   title: "DataForge — SAP Data Analytics Academy",
