@@ -41,12 +41,12 @@ export default function Home() {
         <div className="header-actions"><button className="search" aria-label="Search">⌕</button><div className="streak"><span>◆</span> 7 day streak</div><button className="avatar" aria-label="Open profile">AK</button></div>
       </header>
 
-      <section className="hero" id="top">
+      <section className="hero photo-hero" id="top">
         <div className="eyebrow"><span>LEARNING PATH</span><i></i><span>SAP DATA ANALYTICS</span></div>
         <div className="hero-grid">
           <div>
-            <h1>Turn raw data into<br/><em>real decisions.</em></h1>
-            <p className="lede">A hands-on learning pathway for the next generation of SAP data engineers. Build the foundation. Master the tools. Solve what matters.</p>
+            <h1>Build Better <em>Skills.</em></h1>
+            <p className="lede">Learn SAP data analytics with guided classes, hands-on labs, and career-focused projects.</p>
             <label className="course-search"><span>⌕</span><input value={courseSearch} onChange={(event) => setCourseSearch(event.target.value)} onFocus={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})} placeholder="What do you want to learn?" aria-label="Search learning programs"/><button onClick={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})}>Search</button></label>
             <div className="hero-actions"><button className="primary" onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}>Continue learning <span>→</span></button><button className="secondary" onClick={() => setShowCurriculum(true)}>View curriculum <span>↘</span></button></div>
           </div>
@@ -63,17 +63,16 @@ export default function Home() {
       <section className="marquee" aria-label="Learning topics"><div>SAP DATASPHERE <b>✦</b> DATA MODELING <b>✦</b> SAP ANALYTICS CLOUD <b>✦</b> STORYTELLING WITH DATA <b>✦</b> BUSINESS INSIGHT</div></section>
 
       <section className="trust-strip">
-        <span>ENGINEER-FOCUSED LEARNING</span><div>SAP</div><div>DATASPHERE</div><div>ANALYTICS CLOUD</div><div>BUSINESS DATA CLOUD</div><div>S/4HANA</div>
+        <span>OUR LEARNERS BUILD SKILLS FOR</span><div>SAP</div><div>ACCENTURE</div><div>DELOITTE.</div><div>Capgemini</div><div>Infosys</div>
       </section>
 
       <section className="catalog" id="catalog">
-        <div className="catalog-head"><div><span className="eyebrow-text">EXPLORE LEARNING PROGRAMS</span><h2>Skills that move<br/>your career forward.</h2></div><p>Focused learning tracks built around real SAP data workflows—not disconnected feature tours.</p></div>
-        <div className="category-pills"><button className="active">All programs</button><button>Datasphere</button><button>Data modeling</button><button>Analytics</button><button>Career skills</button></div>
-        <div className="course-grid">
+        <div className="catalog-head"><div><span className="eyebrow-text">SAP LEARNING PROGRAMS</span><h2>Explore Our Courses</h2></div><p>Focused learning tracks built around real SAP data workflows—not disconnected feature tours.</p></div>
+        <div className="course-browser"><aside className="course-categories"><b>Trending Courses</b><button className="active">SAP Datasphere</button><button>SAP Analytics Cloud</button><button>Data Modeling</button><button>Data Integration</button><button>SAP Business Data Cloud</button><button>Career Preparation</button></aside><div className="course-grid">
           {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).map((course, index) => <article className={`course-card ${course.accent}`} key={course.title}>
             <div className="course-card-top"><span>{course.tag}</span><b>0{index + 1}</b></div><div className="course-glyph"><i></i><i></i><b>{course.title.split(" ")[0]}</b></div><h3>{course.title}</h3><div className="course-data"><span>{course.level}</span><span>{course.lessons}</span></div><button onClick={() => setShowCurriculum(true)}>View program <span>↗</span></button>
           </article>)}
-        </div>
+        </div></div>
         {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).length === 0 && <p className="no-results">No exact match yet. Try “modeling”, “analytics”, or “beginner”.</p>}
       </section>
 
@@ -122,6 +121,10 @@ export default function Home() {
       </section>
 
       <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
+
+      <aside className="enquiry-card"><div className="enquiry-title">Reach Out to Us <span>⌄</span></div><form onSubmit={(event) => event.preventDefault()}><input placeholder="Enter your full name" aria-label="Full name"/><input placeholder="Enter phone number" aria-label="Phone number"/><input placeholder="Enter your course" aria-label="Course of interest"/><button type="submit">Submit</button></form></aside>
+      <a className="call-float" href="tel:+918882178896" aria-label="Call DataForge">☎</a>
+      <div className="contact-bar"><span>◉ +91-8882178896</span><span>✉ Learn SAP with DataForge</span><span>▣ Live guided classes</span></div>
 
       {showCurriculum && <div className="curriculum-backdrop" role="presentation" onMouseDown={() => setShowCurriculum(false)}>
         <section className="curriculum-panel" role="dialog" aria-modal="true" aria-labelledby="curriculum-title" onMouseDown={(event) => event.stopPropagation()}>
