@@ -145,6 +145,24 @@ export default function Home() {
         ].map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
 
+      <section className="program-support">
+        <div className="support-ribbons">{[
+          ["▣","Live Class with Industry Use Cases",["Interactive learning","Real SAP examples","Expert guidance","Doubt resolution"]],
+          ["▤","Daily Assignment & Weekly Assessments",["Hands-on practice","Concept reinforcement","Weekly evaluation","Timely feedback"]],
+          ["◉","Project Testing & Deployment",["Project development","Testing practice","Deployment exposure","Portfolio creation"]],
+          ["◎","Interview Preparation",["Mock interviews","Personal development","Architecture questions","Confidence building"]],
+          ["✓","Resume Building",["Resume crafting","Industry-focused format","Skills highlighting","Project evidence"]],
+          ["✦","Career Guidance",["Role discovery","Interview support","Learning roadmap","Opportunity readiness"]],
+        ].map(([icon,title,items],index) => <article className={index % 2 ? "dark" : "gold"} key={title as string}><span className="ribbon-icon">{icon as string}</span><h3>{title as string}</h3><ul>{(items as string[]).map(item => <li key={item}>● <span>{item}</span></li>)}</ul></article>)}</div>
+
+        <div className="benefits-heading"><h2>Exclusive Program Benefits</h2></div>
+        <div className="benefit-videos">{[
+          ["LEARNING", "MATERIALS GUIDE"], ["BUILD A", "JOB-READY RESUME"], ["INTERVIEW", "PREPARATION"], ["REAL PROJECT", "GUIDANCE"]
+        ].map(([line1,line2],index) => <button key={line2} onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})} aria-label={`Open ${line1} ${line2} benefit`}><span className="video-brand">DF ACADEMY</span><strong>{line1}<br/><em>{line2}</em></strong><i>▶</i><small>HD</small><b>0{index + 1}</b></button>)}</div>
+
+        <div className="ecosystem"><h2>Prepare for the <em>SAP Data</em> ecosystem</h2><div><span>SAP</span><span>Datasphere</span><span>Analytics Cloud</span><span>S/4HANA</span><span>Business Data Cloud</span><span>SQL</span><span>Power BI</span></div></div>
+      </section>
+
       <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
 
       <aside className="enquiry-card"><div className="enquiry-title">Reach Out to Us <span>⌄</span></div><form onSubmit={(event) => event.preventDefault()}><input placeholder="Enter your full name" aria-label="Full name"/><input placeholder="Enter phone number" aria-label="Phone number"/><input placeholder="Enter your course" aria-label="Course of interest"/><button type="submit">Submit</button></form></aside>
