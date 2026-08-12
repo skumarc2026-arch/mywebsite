@@ -163,6 +163,25 @@ export default function Home() {
         <div className="ecosystem"><h2>Prepare for the <em>SAP Data</em> ecosystem</h2><div><span>SAP</span><span>Datasphere</span><span>Analytics Cloud</span><span>S/4HANA</span><span>Business Data Cloud</span><span>SQL</span><span>Power BI</span></div></div>
       </section>
 
+      <section className="faculty">
+        <div className="faculty-heading"><h2>Meet Our Faculty</h2><p>Learn with dedicated instructors and industry-focused mentors</p></div>
+        <div className="faculty-leads">{[
+          ["AR","Ananya Rao","Lead · SAP Datasphere"],["VM","Vikram Mehta","Lead · Data Architecture"],["NS","Neha Singh","Lead · Analytics & Careers"]
+        ].map(([initials,name,role]) => <article key={name}><div className="faculty-avatar">{initials}</div><h3>{name}</h3><p>{role}</p><small>SAMPLE FACULTY PROFILE</small></article>)}</div>
+        <div className="faculty-row">{[
+          ["RK","Rohan Kapoor","SQL & Modeling"],["IP","Isha Patel","Data Integration"],["AS","Arjun Shah","SAP Analytics Cloud"],["MK","Meera Kumar","Governance & Security"],["DG","Dev Gupta","Project Mentor"],["SJ","Sara Joseph","Career Coach"]
+        ].map(([initials,name,role]) => <article key={name}><div className="faculty-avatar">{initials}</div><h3>{name}</h3><p>{role}</p></article>)}</div>
+      </section>
+
+      <section className="learner-stories">
+        <div className="stories-heading"><h2>Our Success Lies In Our <em>Learners&apos;</em> Success Stories</h2><p>See how guided practice helps learners turn SAP concepts into clear, demonstrable skills.</p></div>
+        <div className="story-grid">{[
+          ["01","From spreadsheets to semantic models","The structured labs helped me understand how dimensions, measures, and associations work together in a real analytical model."],
+          ["02","A project I can confidently explain","Building the capstone gave me a clear story for interviews—from source connection through governance and dashboard consumption."],
+          ["03","Learning by doing made the difference","The weekly exercises made Datasphere feel practical. I could test each idea instead of only watching someone else build it."],
+        ].map(([n,title,quote]) => <article key={n}><span>{n}</span><div className="stars">★★★★★</div><blockquote>“{quote}”</blockquote><h3>{title}</h3><small>ILLUSTRATIVE LEARNER STORY</small></article>)}</div>
+      </section>
+
       <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
 
       <aside className="enquiry-card"><div className="enquiry-title">Reach Out to Us <span>⌄</span></div><form onSubmit={(event) => event.preventDefault()}><input placeholder="Enter your full name" aria-label="Full name"/><input placeholder="Enter phone number" aria-label="Phone number"/><input placeholder="Enter your course" aria-label="Course of interest"/><button type="submit">Submit</button></form></aside>
