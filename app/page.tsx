@@ -1,250 +1,29 @@
 "use client";
-
 import { useMemo, useState } from "react";
 
-const modules = [
-  { n: "01", title: "Data foundations", detail: "Sources, models & semantics", time: "45 min", done: true },
-  { n: "02", title: "SAP Datasphere", detail: "Spaces, flows & business layers", time: "1h 20m", active: true },
-  { n: "03", title: "SAP Analytics Cloud", detail: "Stories, models & planning", time: "1h 05m" },
-  { n: "04", title: "Applied data project", detail: "From question to insight", time: "2h 30m" },
+const courses = [
+  ["SAP Datasphere Essentials","Beginner","18 lessons"],["Business Data Modeling","Beginner","24 lessons"],["Data & Replication Flows","Intermediate","20 lessons"],["SAP Analytics Cloud","Intermediate","22 lessons"],["Security & Data Access","Advanced","14 lessons"],["End-to-End Data Product","Capstone","8 workshops"],["Datasphere Administration","Intermediate","16 lessons"],["Advanced SQL Views","Advanced","15 lessons"]
 ];
+const categories=["All Courses","SAP Datasphere","Data Modeling","Data Integration","SAP Analytics Cloud","Business Data Cloud","Career Preparation"];
 
-const skills: Array<[string, number]> = [
-  ["Data modeling", 82], ["Data integration", 64], ["Visualization", 48]
-];
-
-const courseTracks = [
-  { tag: "FOUNDATION", title: "SAP Datasphere Essentials", level: "Beginner", lessons: "18 lessons", accent: "lime" },
-  { tag: "MODELING", title: "Business Data Modeling", level: "Beginner", lessons: "24 lessons", accent: "mint" },
-  { tag: "INTEGRATION", title: "Data & Replication Flows", level: "Intermediate", lessons: "20 lessons", accent: "orange" },
-  { tag: "ANALYTICS", title: "SAP Analytics Cloud", level: "Intermediate", lessons: "22 lessons", accent: "blue" },
-  { tag: "GOVERNANCE", title: "Security & Data Access", level: "Advanced", lessons: "14 lessons", accent: "violet" },
-  { tag: "PROJECT", title: "End-to-End Data Product", level: "Capstone", lessons: "8 workshops", accent: "yellow" },
-  { tag: "DATASPHERE", title: "SAP Datasphere Administration", level: "Intermediate", lessons: "16 lessons", accent: "lime" },
-  { tag: "ANALYTICS", title: "Planning with Analytics Cloud", level: "Advanced", lessons: "18 lessons", accent: "blue" },
-  { tag: "MODELING", title: "Advanced SQL Views", level: "Advanced", lessons: "15 lessons", accent: "mint" },
-  { tag: "CAREER", title: "SAP Data Interview Lab", level: "Career", lessons: "10 workshops", accent: "orange" },
-];
-
-export default function Home() {
-  const [activeModule, setActiveModule] = useState(1);
-  const [tab, setTab] = useState("Pathway");
-  const [showCurriculum, setShowCurriculum] = useState(false);
-  const [courseSearch, setCourseSearch] = useState("");
-  const [courseCategory, setCourseCategory] = useState("All");
-  const [showAllCourses, setShowAllCourses] = useState(false);
-  const [enquirySent, setEnquirySent] = useState(false);
-  const current = modules[activeModule];
-  const progress = useMemo(() => Math.round(((activeModule + 0.35) / modules.length) * 100), [activeModule]);
-  const visibleCourses = courseTracks.filter((course) => {
-    const text = `${course.title} ${course.tag} ${course.level}`.toLowerCase();
-    return text.includes(courseSearch.toLowerCase()) && (courseCategory === "All" || text.includes(courseCategory.toLowerCase()));
-  });
-
-  return (
-    <main>
-      <div className="announcement"><span>●</span> NEW COHORT ENROLLMENT IS OPEN <b>—</b> SAP DATASPHERE FOR EARLY-CAREER ENGINEERS <button onClick={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})}>EXPLORE PROGRAMS →</button></div>
-      <header className="topbar">
-        <a className="brand" href="#top" aria-label="DataForge home"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></a>
-        <nav aria-label="Primary navigation">
-          {["Home", "Courses", "Pathway", "Benefits", "Faculty"].map((item) => <button key={item} onClick={() => {setTab(item); document.getElementById(({Home:"top",Courses:"catalog",Pathway:"course",Benefits:"benefits",Faculty:"faculty"} as Record<string,string>)[item])?.scrollIntoView({behavior:"smooth"})}} className={tab === item ? "selected" : ""}>{item}</button>)}
-        </nav>
-        <div className="header-actions"><button className="search" aria-label="Search">⌕</button><div className="streak"><span>◆</span> 7 day streak</div><button className="avatar" aria-label="Open profile">AK</button></div>
-      </header>
-
-      <section className="hero photo-hero" id="top">
-        <div className="eyebrow"><span>LEARNING PATH</span><i></i><span>SAP DATA ANALYTICS</span></div>
-        <div className="hero-grid">
-          <div>
-            <h1>Build Better <em>Skills.</em></h1>
-            <p className="lede">Learn SAP data analytics with guided classes, hands-on labs, and career-focused projects.</p>
-            <label className="course-search"><span>⌕</span><input value={courseSearch} onChange={(event) => setCourseSearch(event.target.value)} onFocus={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})} placeholder="What do you want to learn?" aria-label="Search learning programs"/><button onClick={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})}>Search</button></label>
-            <div className="hero-actions"><button className="primary" onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}>Continue learning <span>→</span></button><button className="secondary" onClick={() => setShowCurriculum(true)}>View curriculum <span>↘</span></button></div>
-          </div>
-          <div className="signal-card" aria-label="Current learning progress">
-            <div className="signal-head"><span>YOUR MOMENTUM</span><b>THIS WEEK</b></div>
-            <div className="metric"><strong>{progress}%</strong><span>PATHWAY<br/>COMPLETE</span></div>
-            <div className="bars">{[34,51,45,77,68,94,82].map((h,i)=><i key={i} style={{height:`${h}%`}} className={i===5?"hot":""}></i>)}</div>
-            <div className="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
-            <div className="signal-foot"><span><b>4.5h</b> focused</span><span><b>12</b> exercises</span><span><b>3</b> skills up</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="marquee" aria-label="Learning topics"><div>SAP DATASPHERE <b>✦</b> DATA MODELING <b>✦</b> SAP ANALYTICS CLOUD <b>✦</b> STORYTELLING WITH DATA <b>✦</b> BUSINESS INSIGHT</div></section>
-
-      <section className="trust-strip">
-        <span>OUR LEARNERS BUILD SKILLS FOR</span><div>SAP</div><div>ACCENTURE</div><div>DELOITTE.</div><div>Capgemini</div><div>Infosys</div>
-      </section>
-
-      <section className="catalog" id="catalog">
-        <div className="catalog-head"><div><span className="eyebrow-text">SAP LEARNING PROGRAMS</span><h2>Explore Our Courses</h2></div><p>Focused learning tracks built around real SAP data workflows—not disconnected feature tours.</p></div>
-        <div className="category-pills">{["All","Datasphere","Modeling","Analytics","Career"].map(category => <button key={category} className={courseCategory === category ? "active" : ""} onClick={() => {setCourseCategory(category); setShowAllCourses(false)}}>{category === "All" ? "All programs" : category}</button>)}</div>
-        <div className="course-browser"><aside className="course-categories"><b>Trending Courses</b><button className="active">SAP Datasphere</button><button>SAP Analytics Cloud</button><button>Data Modeling</button><button>Data Integration</button><button>SAP Business Data Cloud</button><button>Career Preparation</button></aside><div className="course-grid">
-          {visibleCourses.slice(0, showAllCourses ? visibleCourses.length : 6).map((course, index) => <article className={`course-card ${course.accent}`} key={course.title}>
-            <div className="course-card-top"><span>{course.tag}</span><b>0{index + 1}</b></div><div className="course-glyph"><i></i><i></i><b>{course.title.split(" ")[0]}</b></div><h3>{course.title}</h3><div className="course-data"><span>{course.level}</span><span>{course.lessons}</span></div><button onClick={() => setShowCurriculum(true)}>View program <span>↗</span></button>
-          </article>)}
-        </div></div>
-        {visibleCourses.length === 0 && <p className="no-results">No exact match yet. Try “modeling”, “analytics”, or “beginner”.</p>}
-        {visibleCourses.length > 6 && <button className="show-more" onClick={() => setShowAllCourses(value => !value)}>{showAllCourses ? "Show fewer" : "Show more programs"} <span>{showAllCourses ? "↑" : "↓"}</span></button>}
-      </section>
-
-      <section className="career-board">
-        <div className="career-column">
-          <h2>Latest Hiring <span>NEW</span></h2>
-          <article className="hiring-poster">
-            <div className="poster-brand"><b>DF</b><span>CAREER ALERT</span></div><strong>WE&apos;RE<br/>HIRING!</strong><div className="poster-role">SAP DATA ANALYTICS INTERN</div>
-            <ul><li>Early-career opportunity</li><li>Datasphere fundamentals</li><li>SQL and modeling skills</li><li>Portfolio project preferred</li></ul>
-            <button>View opportunity</button><small>DEMONSTRATION LISTING</small>
-          </article>
-        </div>
-        <div className="career-column featured">
-          <h2>Recently Placed Candidates</h2>
-          <article className="placement-story">
-            <div className="confetti">✦ · ✦ · ✦</div><div className="candidate-avatar">AK</div><div className="placement-copy"><span>LEARNER MILESTONE</span><strong>PROJECT<br/>SHOWCASE READY</strong><p>Aarav completed the end-to-end SAP Datasphere pathway and presented a governed sales analytics data product.</p><div><b>SAP DATASPHERE</b><b>DATA MODELING</b></div></div>
-          </article>
-        </div>
-        <div className="career-column">
-          <h2>Latest Hiring <span>NEW</span></h2>
-          <article className="hiring-poster second">
-            <div className="poster-brand"><b>DF</b><span>CAREER ALERT</span></div><strong>OPEN<br/>ROLE</strong><div className="poster-role">JUNIOR BI & REPORTING ANALYST</div>
-            <ul><li>Graduate opportunity</li><li>Dashboard design skills</li><li>Business storytelling</li><li>SAP Analytics Cloud basics</li></ul>
-            <button>View opportunity</button><small>DEMONSTRATION LISTING</small>
-          </article>
-        </div>
-      </section>
-
-      <section className="impact-stats"><div><strong>1,500+</strong><span>ENGINEERS ENABLED</span></div><div><strong>96%</strong><span>LAB COMPLETION</span></div><div><strong>6</strong><span>GUIDED PROGRAMS</span></div><div><strong>24/7</strong><span>LEARNING ACCESS</span></div></section>
-
-      <section className="workspace" id="course">
-        <aside className="modules">
-          <div className="section-label"><span>YOUR PATHWAY</span><b>{progress}% COMPLETE</b></div>
-          <h2>Build your<br/>analytics edge.</h2>
-          <div className="module-list">
-            {modules.map((m,i)=><button key={m.n} onClick={()=>setActiveModule(i)} className={activeModule===i?"module active":"module"}>
-              <span className="num">{m.done?"✓":m.n}</span><span className="module-copy"><b>{m.title}</b><small>{m.detail}</small></span><span className="time">{m.time}</span>
-            </button>)}
-          </div>
-        </aside>
-
-        <article className="lesson">
-          <div className="lesson-top"><span>MODULE {current.n}</span><span>● IN PROGRESS</span></div>
-          <div className="lesson-visual"><div className="grid-lines"></div><span className="tag">CURRENT LESSON</span><div className="cube"><i></i><b>DATA</b></div><div className="orbit one">SOURCE</div><div className="orbit two">MODEL</div><div className="orbit three">INSIGHT</div></div>
-          <div className="lesson-body">
-            <span className="lesson-count">LESSON 02 OF 06</span>
-            <h3>{current.title}:<br/><em>From source to model</em></h3>
-            <p>Learn how data moves through SAP&apos;s modern data stack — and how each layer adds context, meaning, and business value.</p>
-            <div className="lesson-meta"><span>◷ 18 MIN</span><span>▱ INTERACTIVE</span><span>◎ 5 KNOWLEDGE CHECKS</span></div>
-            <button className="start">Start lesson <span>→</span></button>
-          </div>
-        </article>
-      </section>
-
-      <section className="growth">
-        <div><span className="section-label">SKILL SIGNAL</span><h2>Your capability<br/>is taking shape.</h2><p>Every exercise strengthens a practical skill you can apply on the job.</p></div>
-        <div className="skill-list">{skills.map(([name,val])=><div className="skill" key={name}><div><b>{name}</b><span>{val}%</span></div><div className="track"><i style={{width:`${val}%`}}></i></div></div>)}</div>
-        <div className="quote"><span>“</span><p>The goal isn&apos;t to know every feature. It&apos;s to know which questions to ask — and how data can answer them.</p><b>— YOUR LEARNING PRINCIPLE</b></div>
-      </section>
-
-      <section className="support">
-        <div className="support-heading"><span className="eyebrow-text">BEYOND THE COURSE</span><h2>Everything you need<br/>to become job-ready.</h2></div>
-        <div className="support-grid">{[
-          ["01","Live use cases","Learn through practical scenarios drawn from finance, sales, supply chain, and people analytics."],
-          ["02","Weekly assessments","Reinforce every module with applied checks, guided feedback, and focused revision."],
-          ["03","Portfolio project","Turn a business question into a secure data product you can confidently demonstrate."],
-          ["04","Interview practice","Explain modeling choices, architecture, governance, and trade-offs with clarity."],
-          ["05","Career materials","Translate your labs and project work into strong resume and profile evidence."],
-          ["06","Learning community","Get peer support, instructor guidance, and ongoing access to practical resources."],
-        ].map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
-      </section>
-
-      <section className="voice-showcase">
-        <div className="mantra-panel"><h2>Our Success Mantra</h2>{[
-          ["⚑","Commitment","Ensuring quality training every day"],["◎","Fulfillment","Meeting learning goals with confidence"],["◆","Accomplishment","Learners building industry-ready expertise"]
-        ].map(([icon,title,copy]) => <article key={title}><span>{icon}</span><div><h3>{title}</h3><p>• &nbsp;{copy}</p></div></article>)}</div>
-        <div className="phone-stage"><h2>Our Learner Voice</h2><div className="phone-orbit" aria-label="Rotating learner feedback examples">{[
-          ["Modeling Lab","The associations finally make sense after building the sales model."],
-          ["Weekly Check-in","I completed my first replication flow today."],
-          ["Project Mentor","Your semantic model is ready for the next review."],
-          ["Study Group","Can we practise data access controls next?"],
-          ["Career Coach","Add the capstone architecture to your portfolio."],
-          ["Analytics Lab","The dashboard is now connected to the analytical model."],
-        ].map(([name,message],index) => <div className={`phone phone-${index + 1}`} key={name}><div className="phone-speaker"></div><div className="phone-head"><b>{name}</b><span>● online</span></div><div className="chat"><p>{message}</p><p className="reply">Done — thank you! ✓✓</p></div><small>ILLUSTRATIVE MESSAGE</small></div>)}</div></div>
-        <div className="beyond-panel"><h2>Beyond Courses:</h2><p>Additional Support We Provide</p><div>{[
-          ["◯","24/7 Support"],["in","LinkedIn Profile"],["▤","Resume Writing"],["♙","Alumni Sessions"],["♙","Interview Preparation"],["▱","Live Projects"]
-        ].map(([icon,label]) => <article key={label}><b>{icon}</b><span>{label}</span></article>)}</div></div>
-      </section>
-
-      <section className="program-support" id="benefits">
-        <div className="support-ribbons">{[
-          ["▣","Live Class with Industry Use Cases",["Interactive learning","Real SAP examples","Expert guidance","Doubt resolution"]],
-          ["▤","Daily Assignment & Weekly Assessments",["Hands-on practice","Concept reinforcement","Weekly evaluation","Timely feedback"]],
-          ["◉","Project Testing & Deployment",["Project development","Testing practice","Deployment exposure","Portfolio creation"]],
-          ["◎","Interview Preparation",["Mock interviews","Personal development","Architecture questions","Confidence building"]],
-          ["✓","Resume Building",["Resume crafting","Industry-focused format","Skills highlighting","Project evidence"]],
-          ["✦","Career Guidance",["Role discovery","Interview support","Learning roadmap","Opportunity readiness"]],
-        ].map(([icon,title,items],index) => <article className={index % 2 ? "dark" : "gold"} key={title as string}><span className="ribbon-icon">{icon as string}</span><h3>{title as string}</h3><ul>{(items as string[]).map(item => <li key={item}>● <span>{item}</span></li>)}</ul></article>)}</div>
-
-        <div className="benefits-heading"><h2>Exclusive Program Benefits</h2></div>
-        <div className="benefit-videos">{[
-          ["LEARNING", "MATERIALS GUIDE"], ["BUILD A", "JOB-READY RESUME"], ["INTERVIEW", "PREPARATION"], ["REAL PROJECT", "GUIDANCE"]
-        ].map(([line1,line2],index) => <button key={line2} onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})} aria-label={`Open ${line1} ${line2} benefit`}><span className="video-brand">DF ACADEMY</span><strong>{line1}<br/><em>{line2}</em></strong><i>▶</i><small>HD</small><b>0{index + 1}</b></button>)}</div>
-
-        <div className="ecosystem"><h2>Prepare for the <em>SAP Data</em> ecosystem</h2>
-          <div className="logo-marquee right"><div className="logo-track">{[...Array(2)].flatMap((_,set) => ["SAP","Datasphere","Analytics Cloud","S/4HANA","Business Data Cloud","SQL","Power BI"].map((name,index) => <span key={`top-${set}-${index}`}>{name}</span>))}</div></div>
-          <div className="logo-marquee left"><div className="logo-track">{[...Array(2)].flatMap((_,set) => ["Accenture","Deloitte","Capgemini","Infosys","Wipro","Genpact","Tech Mahindra"].map((name,index) => <span key={`bottom-${set}-${index}`}>{name}</span>))}</div></div>
-        </div>
-      </section>
-
-      <section className="faculty" id="faculty">
-        <div className="faculty-heading"><h2>Meet Our Faculty</h2><p>Learn with dedicated instructors and industry-focused mentors</p></div>
-        <div className="faculty-leads">{[
-          ["AR","Ananya Rao","Lead · SAP Datasphere"],["VM","Vikram Mehta","Lead · Data Architecture"],["NS","Neha Singh","Lead · Analytics & Careers"]
-        ].map(([initials,name,role]) => <article key={name}><div className="faculty-avatar">{initials}</div><h3>{name}</h3><p>{role}</p><small>SAMPLE FACULTY PROFILE</small></article>)}</div>
-        <div className="faculty-row">{[
-          ["RK","Rohan Kapoor","SQL & Modeling"],["IP","Isha Patel","Data Integration"],["AS","Arjun Shah","SAP Analytics Cloud"],["MK","Meera Kumar","Governance & Security"],["DG","Dev Gupta","Project Mentor"],["SJ","Sara Joseph","Career Coach"]
-        ].map(([initials,name,role]) => <article key={name}><div className="faculty-avatar">{initials}</div><h3>{name}</h3><p>{role}</p></article>)}</div>
-      </section>
-
-      <section className="learner-stories">
-        <div className="stories-heading"><h2>Our Success Lies In Our <em>Learners&apos;</em> Success Stories</h2><p>See how guided practice helps learners turn SAP concepts into clear, demonstrable skills.</p></div>
-        <div className="story-grid">{[
-          ["01","From spreadsheets to semantic models","The structured labs helped me understand how dimensions, measures, and associations work together in a real analytical model."],
-          ["02","A project I can confidently explain","Building the capstone gave me a clear story for interviews—from source connection through governance and dashboard consumption."],
-          ["03","Learning by doing made the difference","The weekly exercises made Datasphere feel practical. I could test each idea instead of only watching someone else build it."],
-        ].map(([n,title,quote]) => <article key={n}><span>{n}</span><div className="stars">★★★★★</div><blockquote>“{quote}”</blockquote><h3>{title}</h3><small>ILLUSTRATIVE LEARNER STORY</small></article>)}</div>
-      </section>
-
-      <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
-
-      <aside className="enquiry-card"><div className="enquiry-title">Reach Out to Us <span>⌄</span></div>{enquirySent ? <div className="enquiry-success"><b>Thank you!</b><p>Your request is ready. Connect a destination email or CRM to receive submissions.</p><button onClick={() => setEnquirySent(false)}>Send another</button></div> : <form onSubmit={(event) => {event.preventDefault(); setEnquirySent(true)}}><input required placeholder="Enter your full name" aria-label="Full name"/><input required type="tel" placeholder="Enter phone number" aria-label="Phone number"/><input required placeholder="Enter your course" aria-label="Course of interest"/><button type="submit">Submit</button></form>}</aside>
-      <a className="call-float" href="tel:+918882178896" aria-label="Call DataForge">☎</a>
-      <div className="contact-bar"><span>◉ +91-8882178896</span><span>✉ Learn SAP with DataForge</span><span>▣ Live guided classes</span></div>
-
-      {showCurriculum && <div className="curriculum-backdrop" role="presentation" onMouseDown={() => setShowCurriculum(false)}>
-        <section className="curriculum-panel" role="dialog" aria-modal="true" aria-labelledby="curriculum-title" onMouseDown={(event) => event.stopPropagation()}>
-          <div className="curriculum-head">
-            <div><span className="eyebrow-text">SAP DATASPHERE · LEARNING PATH</span><h2 id="curriculum-title">From data source<br/>to business insight.</h2></div>
-            <button className="close" onClick={() => setShowCurriculum(false)} aria-label="Close curriculum">×</button>
-          </div>
-          <div className="curriculum-summary"><p>A practical, project-led curriculum for engineers learning to integrate, model, govern, and deliver trusted data products in SAP Datasphere.</p><div><span><b>6</b> MODULES</span><span><b>12h</b> GUIDED LEARNING</span><span><b>6</b> HANDS-ON LABS</span></div></div>
-          <div className="curriculum-list">
-            {[
-              ["01", "Datasphere foundations", "Understand the architecture, spaces, roles, connections, and the end-to-end data lifecycle.", "Explore a Datasphere tenant and create your first workspace", "1h 15m"],
-              ["02", "Connect & acquire data", "Set up connections, remote tables, replication flows, and data flows across SAP and non-SAP sources.", "Connect SAP S/4HANA data and build a replication flow", "2h"],
-              ["03", "Model the business", "Design local tables, views, associations, analytical datasets, measures, dimensions, and semantic usage.", "Build a sales performance analytical model", "2h 30m"],
-              ["04", "Transform & integrate", "Apply graphical and SQL transformations, joins, unions, filters, calculated columns, and delta handling.", "Create a governed customer 360 data flow", "2h 15m"],
-              ["05", "Govern & secure", "Use the catalog, metadata, data access controls, lineage, impact analysis, and transport workflows.", "Implement row-level access and trace data lineage", "1h 45m"],
-              ["06", "Consume & deliver", "Expose trusted models to SAP Analytics Cloud and other consumers, then monitor performance and usage.", "Publish an executive-ready model to SAP Analytics Cloud", "2h 15m"],
-            ].map(([number,title,description,lab,time]) => <article className="curriculum-item" key={number}>
-              <span className="curriculum-number">{number}</span>
-              <div><h3>{title}</h3><p>{description}</p><div className="lab"><b>LAB</b><span>{lab}</span></div></div>
-              <span className="curriculum-time">{time}</span>
-            </article>)}
-          </div>
-          <div className="curriculum-footer"><p><b>CAPSTONE OUTCOME</b> Build and publish a secure, reusable SAP Datasphere data product from source to dashboard.</p><button className="start" onClick={() => {setShowCurriculum(false); document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}}>Start pathway <span>→</span></button></div>
-        </section>
-      </div>}
-    </main>
-  );
+export default function Home(){
+ const [query,setQuery]=useState(""); const [category,setCategory]=useState("All Courses"); const [more,setMore]=useState(false); const [course,setCourse]=useState<string|null>(null); const [sent,setSent]=useState(false);
+ const filtered=useMemo(()=>courses.filter(c=>(c.join(" ").toLowerCase().includes(query.toLowerCase()))&&(category==="All Courses"||c[0].toLowerCase().includes(category.replace("SAP ","").toLowerCase()))),[query,category]);
+ const go=(id:string)=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
+ return <main>
+  <div className="notice">Admissions open for the next SAP Data Analytics cohort <button onClick={()=>go("courses")}>Explore courses →</button></div>
+  <header><a className="logo" href="#home"><b>DF</b><span>DataForge<small>SAP DATA ACADEMY</small></span></a><nav>{[["Home","home"],["Courses","courses"],["Benefits","benefits"],["Faculty","faculty"],["Contact","contact"]].map(([x,id])=><button onClick={()=>go(id)} key={x}>{x}</button>)}</nav><button className="login">Student Login</button></header>
+  <section className="hero" id="home"><div><span className="pill">LIVE · PROJECT-LED · CAREER-FOCUSED</span><h1>Build Better <em>SAP Data Skills.</em></h1><p>Master SAP Datasphere and Analytics Cloud through guided classes, practical labs, and portfolio-ready projects.</p><label><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search SAP courses..."/><button onClick={()=>go("courses")}>Search</button></label><small>Join an active community of early-career data engineers.</small></div></section>
+  <section className="logos"><h2>Skills designed for the modern data ecosystem</h2><div className="logo-run right"><p>{[...Array(2)].flatMap(()=>["SAP","DATASPHERE","S/4HANA","ANALYTICS CLOUD","SQL","POWER BI"]).map((x,i)=><b key={i}>{x}</b>)}</p></div><div className="logo-run left"><p>{[...Array(2)].flatMap(()=>["ACCENTURE","DELOITTE","CAPGEMINI","INFOSYS","WIPRO","GENPACT"]).map((x,i)=><b key={i}>{x}</b>)}</p></div></section>
+  <section className="catalog" id="courses"><h2>Explore Our All Courses</h2><div className="catalog-layout"><aside>{categories.map(x=><button className={category===x?"active":""} onClick={()=>setCategory(x)} key={x}>{x}</button>)}</aside><div className="cards">{filtered.slice(0,more?filtered.length:6).map((c,i)=><article key={c[0]}><div className={`cover c${i%4}`}><span>DF ACADEMY</span><strong>{c[0]}</strong></div><h3>{c[0]}</h3><p><span>{c[1]}</span><span>{c[2]}</span></p><button onClick={()=>setCourse(c[0])}>View Program</button></article>)}</div></div>{filtered.length>6&&<button className="show" onClick={()=>setMore(!more)}>{more?"Show less":"Show more"} →</button>}</section>
+  <section className="career"><article><h3>Latest Hiring <b>NEW</b></h3><div><strong>CAREER<br/>OPPORTUNITIES</strong><p>Curated junior SAP data roles and practical preparation guidance.</p><small>DEMONSTRATION CONTENT</small></div></article><article className="placed"><h3>Learner Milestones</h3><div><span>AK</span><section><small>CAPSTONE COMPLETE</small><strong>PROJECT<br/>SHOWCASE READY</strong><p>Built a governed sales analytics data product from source to dashboard.</p></section></div></article><article><h3>Upcoming Cohort <b>NEW</b></h3><div><strong>ENROLLMENT<br/>NOW OPEN</strong><p>Live guided classes, weekly labs, and mentor reviews.</p><small>LIMITED COHORT SIZE</small></div></article></section>
+  <section className="features" id="benefits">{[["▣","Live classes","Industry use cases and expert guidance"],["✓","Assessments","Daily practice and weekly evaluation"],["◎","Projects","Testing, deployment, and portfolio work"],["♙","Interviews","Mock interviews and architecture questions"],["▤","Resume","Skills-first profile and project evidence"],["✦","Career support","Role discovery and learning roadmap"]].map((x,i)=><article className={i%2?"red":"gold"} key={x[1]}><b>{x[0]}</b><h3>{x[1]}</h3><p>{x[2]}</p></article>)}</section>
+  <section className="voice"><div><h2>Our Success Mantra</h2>{[["Commitment","Quality training every day"],["Fulfillment","Confident learning outcomes"],["Accomplishment","Demonstrable industry skills"]].map(x=><article key={x[0]}><b>{x[0]}</b><p>{x[1]}</p></article>)}</div><div className="phones"><h2>Our Learner Voice</h2>{["Modeling Lab","Project Mentor","Study Group","Career Coach","Analytics Lab"].map((x,i)=><article style={{"--i":i} as React.CSSProperties} key={x}><b>{x}</b><p>{i%2?"Your project review is ready.":"I completed the lab today!"}</p><small>ILLUSTRATIVE MESSAGE</small></article>)}</div><div><h2>Beyond Courses</h2><div className="support">{["24/7 Support","LinkedIn Profile","Resume Writing","Alumni Sessions","Interview Prep","Live Projects"].map(x=><span key={x}>{x}</span>)}</div></div></section>
+  <section className="benefit"><h2>Exclusive Program Benefits</h2><div>{["Learning Materials","Resume Workshop","Interview Preparation","Real Project Guidance"].map((x,i)=><button key={x}><small>DF ACADEMY</small><strong>{x}</strong><i>▶</i><b>0{i+1}</b></button>)}</div></section>
+  <section className="team" id="faculty"><h2>Meet Our Faculty</h2><p>Dedicated instructors and industry-focused mentors</p><div>{[["AR","Ananya Rao","SAP Datasphere"],["VM","Vikram Mehta","Data Architecture"],["NS","Neha Singh","Analytics & Careers"],["RK","Rohan Kapoor","SQL & Modeling"],["IP","Isha Patel","Data Integration"],["AS","Arjun Shah","Analytics Cloud"]].map(x=><article key={x[1]}><span>{x[0]}</span><h3>{x[1]}</h3><p>{x[2]}</p><small>SAMPLE PROFILE</small></article>)}</div></section>
+  <section className="stories"><h2>Our Learners&apos; Success Stories</h2><div>{["I can finally explain semantic modeling clearly.","The capstone gave me a project I can demonstrate.","Weekly labs made Datasphere feel practical."].map((x,i)=><article key={x}><b>★★★★★</b><blockquote>“{x}”</blockquote><small>ILLUSTRATIVE LEARNER STORY · 0{i+1}</small></article>)}</div></section>
+  <footer id="contact"><div className="logo"><b>DF</b><span>DataForge<small>SAP DATA ACADEMY</small></span></div><p>Train with purpose. Build with data. Create business impact.</p><div><b>CONTACT</b><a href="tel:+918882178896">+91 88821 78896</a><a href="mailto:learn@dataforge.academy">learn@dataforge.academy</a></div></footer>
+  <aside className="enquire"><h3>Reach Out to Us</h3>{sent?<div><b>Thank you!</b><p>Connect your email or CRM to receive this enquiry.</p><button onClick={()=>setSent(false)}>New enquiry</button></div>:<form onSubmit={e=>{e.preventDefault();setSent(true)}}><input required placeholder="Full name"/><input required type="tel" placeholder="Phone number"/><input required placeholder="Course interest"/><button>Submit</button></form>}</aside>
+  {course&&<div className="modal" onMouseDown={()=>setCourse(null)}><section onMouseDown={e=>e.stopPropagation()}><button onClick={()=>setCourse(null)}>×</button><small>SAP LEARNING PROGRAM</small><h2>{course}</h2><p>Build practical capability through guided concepts, demonstrations, labs, knowledge checks, and a portfolio-ready assignment.</p><ul><li>Live instructor-led sessions</li><li>Hands-on SAP exercises</li><li>Weekly mentor feedback</li><li>Capstone project evidence</li></ul><button className="enroll">Request enrollment</button></section></div>}
+ </main>
 }
