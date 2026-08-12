@@ -76,6 +76,31 @@ export default function Home() {
         {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).length === 0 && <p className="no-results">No exact match yet. Try “modeling”, “analytics”, or “beginner”.</p>}
       </section>
 
+      <section className="career-board">
+        <div className="career-column">
+          <h2>Latest Hiring <span>NEW</span></h2>
+          <article className="hiring-poster">
+            <div className="poster-brand"><b>DF</b><span>CAREER ALERT</span></div><strong>WE&apos;RE<br/>HIRING!</strong><div className="poster-role">SAP DATA ANALYTICS INTERN</div>
+            <ul><li>Early-career opportunity</li><li>Datasphere fundamentals</li><li>SQL and modeling skills</li><li>Portfolio project preferred</li></ul>
+            <button>View opportunity</button><small>DEMONSTRATION LISTING</small>
+          </article>
+        </div>
+        <div className="career-column featured">
+          <h2>Recently Placed Candidates</h2>
+          <article className="placement-story">
+            <div className="confetti">✦ · ✦ · ✦</div><div className="candidate-avatar">AK</div><div className="placement-copy"><span>LEARNER MILESTONE</span><strong>PROJECT<br/>SHOWCASE READY</strong><p>Aarav completed the end-to-end SAP Datasphere pathway and presented a governed sales analytics data product.</p><div><b>SAP DATASPHERE</b><b>DATA MODELING</b></div></div>
+          </article>
+        </div>
+        <div className="career-column">
+          <h2>Latest Hiring <span>NEW</span></h2>
+          <article className="hiring-poster second">
+            <div className="poster-brand"><b>DF</b><span>CAREER ALERT</span></div><strong>OPEN<br/>ROLE</strong><div className="poster-role">JUNIOR BI & REPORTING ANALYST</div>
+            <ul><li>Graduate opportunity</li><li>Dashboard design skills</li><li>Business storytelling</li><li>SAP Analytics Cloud basics</li></ul>
+            <button>View opportunity</button><small>DEMONSTRATION LISTING</small>
+          </article>
+        </div>
+      </section>
+
       <section className="impact-stats"><div><strong>1,500+</strong><span>ENGINEERS ENABLED</span></div><div><strong>96%</strong><span>LAB COMPLETION</span></div><div><strong>6</strong><span>GUIDED PROGRAMS</span></div><div><strong>24/7</strong><span>LEARNING ACCESS</span></div></section>
 
       <section className="workspace" id="course">
