@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./intensive.css";
+import "./interview.css";
 
 export const metadata: Metadata = {
   title: "DataForge — SAP Data Analytics Academy",
