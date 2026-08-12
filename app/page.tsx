@@ -13,15 +13,26 @@ const skills: Array<[string, number]> = [
   ["Data modeling", 82], ["Data integration", 64], ["Visualization", 48]
 ];
 
+const courseTracks = [
+  { tag: "FOUNDATION", title: "SAP Datasphere Essentials", level: "Beginner", lessons: "18 lessons", accent: "lime" },
+  { tag: "MODELING", title: "Business Data Modeling", level: "Beginner", lessons: "24 lessons", accent: "mint" },
+  { tag: "INTEGRATION", title: "Data & Replication Flows", level: "Intermediate", lessons: "20 lessons", accent: "orange" },
+  { tag: "ANALYTICS", title: "SAP Analytics Cloud", level: "Intermediate", lessons: "22 lessons", accent: "blue" },
+  { tag: "GOVERNANCE", title: "Security & Data Access", level: "Advanced", lessons: "14 lessons", accent: "violet" },
+  { tag: "PROJECT", title: "End-to-End Data Product", level: "Capstone", lessons: "8 workshops", accent: "yellow" },
+];
+
 export default function Home() {
   const [activeModule, setActiveModule] = useState(1);
   const [tab, setTab] = useState("Pathway");
   const [showCurriculum, setShowCurriculum] = useState(false);
+  const [courseSearch, setCourseSearch] = useState("");
   const current = modules[activeModule];
   const progress = useMemo(() => Math.round(((activeModule + 0.35) / modules.length) * 100), [activeModule]);
 
   return (
     <main>
+      <div className="announcement"><span>●</span> NEW COHORT ENROLLMENT IS OPEN <b>—</b> SAP DATASPHERE FOR EARLY-CAREER ENGINEERS <button onClick={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})}>EXPLORE PROGRAMS →</button></div>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="DataForge home"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></a>
         <nav aria-label="Primary navigation">
@@ -36,6 +47,7 @@ export default function Home() {
           <div>
             <h1>Turn raw data into<br/><em>real decisions.</em></h1>
             <p className="lede">A hands-on learning pathway for the next generation of SAP data engineers. Build the foundation. Master the tools. Solve what matters.</p>
+            <label className="course-search"><span>⌕</span><input value={courseSearch} onChange={(event) => setCourseSearch(event.target.value)} onFocus={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})} placeholder="What do you want to learn?" aria-label="Search learning programs"/><button onClick={() => document.getElementById("catalog")?.scrollIntoView({behavior:"smooth"})}>Search</button></label>
             <div className="hero-actions"><button className="primary" onClick={() => document.getElementById("course")?.scrollIntoView({behavior:"smooth"})}>Continue learning <span>→</span></button><button className="secondary" onClick={() => setShowCurriculum(true)}>View curriculum <span>↘</span></button></div>
           </div>
           <div className="signal-card" aria-label="Current learning progress">
@@ -49,6 +61,23 @@ export default function Home() {
       </section>
 
       <section className="marquee" aria-label="Learning topics"><div>SAP DATASPHERE <b>✦</b> DATA MODELING <b>✦</b> SAP ANALYTICS CLOUD <b>✦</b> STORYTELLING WITH DATA <b>✦</b> BUSINESS INSIGHT</div></section>
+
+      <section className="trust-strip">
+        <span>ENGINEER-FOCUSED LEARNING</span><div>SAP</div><div>DATASPHERE</div><div>ANALYTICS CLOUD</div><div>BUSINESS DATA CLOUD</div><div>S/4HANA</div>
+      </section>
+
+      <section className="catalog" id="catalog">
+        <div className="catalog-head"><div><span className="eyebrow-text">EXPLORE LEARNING PROGRAMS</span><h2>Skills that move<br/>your career forward.</h2></div><p>Focused learning tracks built around real SAP data workflows—not disconnected feature tours.</p></div>
+        <div className="category-pills"><button className="active">All programs</button><button>Datasphere</button><button>Data modeling</button><button>Analytics</button><button>Career skills</button></div>
+        <div className="course-grid">
+          {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).map((course, index) => <article className={`course-card ${course.accent}`} key={course.title}>
+            <div className="course-card-top"><span>{course.tag}</span><b>0{index + 1}</b></div><div className="course-glyph"><i></i><i></i><b>{course.title.split(" ")[0]}</b></div><h3>{course.title}</h3><div className="course-data"><span>{course.level}</span><span>{course.lessons}</span></div><button onClick={() => setShowCurriculum(true)}>View program <span>↗</span></button>
+          </article>)}
+        </div>
+        {courseTracks.filter((course) => `${course.title} ${course.tag} ${course.level}`.toLowerCase().includes(courseSearch.toLowerCase())).length === 0 && <p className="no-results">No exact match yet. Try “modeling”, “analytics”, or “beginner”.</p>}
+      </section>
+
+      <section className="impact-stats"><div><strong>1,500+</strong><span>ENGINEERS ENABLED</span></div><div><strong>96%</strong><span>LAB COMPLETION</span></div><div><strong>6</strong><span>GUIDED PROGRAMS</span></div><div><strong>24/7</strong><span>LEARNING ACCESS</span></div></section>
 
       <section className="workspace" id="course">
         <aside className="modules">
@@ -78,6 +107,18 @@ export default function Home() {
         <div><span className="section-label">SKILL SIGNAL</span><h2>Your capability<br/>is taking shape.</h2><p>Every exercise strengthens a practical skill you can apply on the job.</p></div>
         <div className="skill-list">{skills.map(([name,val])=><div className="skill" key={name}><div><b>{name}</b><span>{val}%</span></div><div className="track"><i style={{width:`${val}%`}}></i></div></div>)}</div>
         <div className="quote"><span>“</span><p>The goal isn&apos;t to know every feature. It&apos;s to know which questions to ask — and how data can answer them.</p><b>— YOUR LEARNING PRINCIPLE</b></div>
+      </section>
+
+      <section className="support">
+        <div className="support-heading"><span className="eyebrow-text">BEYOND THE COURSE</span><h2>Everything you need<br/>to become job-ready.</h2></div>
+        <div className="support-grid">{[
+          ["01","Live use cases","Learn through practical scenarios drawn from finance, sales, supply chain, and people analytics."],
+          ["02","Weekly assessments","Reinforce every module with applied checks, guided feedback, and focused revision."],
+          ["03","Portfolio project","Turn a business question into a secure data product you can confidently demonstrate."],
+          ["04","Interview practice","Explain modeling choices, architecture, governance, and trade-offs with clarity."],
+          ["05","Career materials","Translate your labs and project work into strong resume and profile evidence."],
+          ["06","Learning community","Get peer support, instructor guidance, and ongoing access to practical resources."],
+        ].map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
 
       <footer><div className="brand"><span className="brandmark">DF</span><span>Data<span>Forge</span></span></div><p>Training engineers to think in data,<br/>build with purpose, and create impact.</p><div><b>SAP DATA ANALYTICS</b><span>ENGINEER ENABLEMENT PROGRAM · 2026</span></div></footer>
