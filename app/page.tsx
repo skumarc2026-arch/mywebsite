@@ -145,6 +145,23 @@ export default function Home() {
         ].map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
 
+      <section className="voice-showcase">
+        <div className="mantra-panel"><h2>Our Success Mantra</h2>{[
+          ["⚑","Commitment","Ensuring quality training every day"],["◎","Fulfillment","Meeting learning goals with confidence"],["◆","Accomplishment","Learners building industry-ready expertise"]
+        ].map(([icon,title,copy]) => <article key={title}><span>{icon}</span><div><h3>{title}</h3><p>• &nbsp;{copy}</p></div></article>)}</div>
+        <div className="phone-stage"><h2>Our Learner Voice</h2><div className="phone-orbit" aria-label="Rotating learner feedback examples">{[
+          ["Modeling Lab","The associations finally make sense after building the sales model."],
+          ["Weekly Check-in","I completed my first replication flow today."],
+          ["Project Mentor","Your semantic model is ready for the next review."],
+          ["Study Group","Can we practise data access controls next?"],
+          ["Career Coach","Add the capstone architecture to your portfolio."],
+          ["Analytics Lab","The dashboard is now connected to the analytical model."],
+        ].map(([name,message],index) => <div className={`phone phone-${index + 1}`} key={name}><div className="phone-speaker"></div><div className="phone-head"><b>{name}</b><span>● online</span></div><div className="chat"><p>{message}</p><p className="reply">Done — thank you! ✓✓</p></div><small>ILLUSTRATIVE MESSAGE</small></div>)}</div></div>
+        <div className="beyond-panel"><h2>Beyond Courses:</h2><p>Additional Support We Provide</p><div>{[
+          ["◯","24/7 Support"],["in","LinkedIn Profile"],["▤","Resume Writing"],["♙","Alumni Sessions"],["♙","Interview Preparation"],["▱","Live Projects"]
+        ].map(([icon,label]) => <article key={label}><b>{icon}</b><span>{label}</span></article>)}</div></div>
+      </section>
+
       <section className="program-support">
         <div className="support-ribbons">{[
           ["▣","Live Class with Industry Use Cases",["Interactive learning","Real SAP examples","Expert guidance","Doubt resolution"]],
