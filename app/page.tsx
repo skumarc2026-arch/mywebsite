@@ -2,9 +2,9 @@
 import { useMemo, useState } from "react";
 
 const courses = [
-  ["SAP Datasphere Essentials","Beginner","18 lessons"],["Business Data Modeling","Beginner","24 lessons"],["Data & Replication Flows","Intermediate","20 lessons"],["SAP Analytics Cloud","Intermediate","22 lessons"],["Security & Data Access","Advanced","14 lessons"],["End-to-End Data Product","Capstone","8 workshops"],["Datasphere Administration","Intermediate","16 lessons"],["Advanced SQL Views","Advanced","15 lessons"]
+  ["SAP BW/4HANA","Beginner to Advanced","28 lessons"],["SAP Datasphere","Beginner","24 lessons"],["SAP Analytics Cloud","Intermediate","22 lessons"],["SAC Planning","Intermediate","20 lessons"],["SAP Business Data Cloud (BDC)","Intermediate","18 lessons"],["SAP Business Technology Platform (BTP)","Beginner","26 lessons"],["Business Data Modeling","Beginner","24 lessons"],["Data & Replication Flows","Intermediate","20 lessons"],["Security & Data Access","Advanced","14 lessons"],["End-to-End Data Product","Capstone","8 workshops"]
 ];
-const categories=["All Courses","SAP Datasphere","Data Modeling","Data Integration","SAP Analytics Cloud","Business Data Cloud","Career Preparation"];
+const categories=["All Courses","SAP BW/4HANA","SAP Datasphere","SAP Analytics Cloud","SAC Planning","Business Data Cloud","SAP BTP"];
 
 export default function Home(){
  const [query,setQuery]=useState(""); const [category,setCategory]=useState("All Courses"); const [more,setMore]=useState(false); const [course,setCourse]=useState<string|null>(null); const [sent,setSent]=useState(false);
